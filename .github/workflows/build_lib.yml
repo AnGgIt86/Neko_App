@@ -1,0 +1,69 @@
+name: Building dependencies
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC
+    env:
+      GH_TOKEN: ${{ secrets.MY_TOKEN }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Golang
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22.2'
+        cache: false
+
+    - name: Install gomobile
+      run: |
+        go install golang.org/x/mobile/cmd/gomobile@latest
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+    - name: Setup Android environment
+      uses: android-actions/setup-android@v3
+
+    - name: Build dependencies
+      run: |
+        git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
+        mkdir ${{ github.workspace }}/v2rayNG/build
+        cd ${{ github.workspace }}/v2rayNG/build
+        git clone --depth=1 https://github.com/2dust/AndroidLibXrayLite
+        cd AndroidLibXrayLite
+        go get github.com/xtls/xray-core@v1.8.11 || true
+        gomobile init
+        go mod tidy -v
+        gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
+        cp *.aar ${{ github.workspace }}/v2rayNG/app/libs/
+        echo "======================================="
+        ls -all
+        echo "======================================="
+
+    - name: Update library
+      run: |
+        cd ${{ github.workspace }}/v2rayNG
+        git config --global user.email jarbull87@gmail.com
+        git config --global user.name Blawuken
+        rel_date="$(date "+%Y%m%d")" # ISO 8601 format
+        git add ${{ github.workspace }}/v2rayNG/app/libs/libv2ray.aar
+        git commit -m "Core: Bump to $rel_date build"
+        git push
