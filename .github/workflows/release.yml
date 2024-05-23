@@ -94,6 +94,7 @@ jobs:
         uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          repository: Blawuken/Neko_v2rayNG
           body_path: ${{ github.workspace }}/CHANGELOG.txt
           token: ${{ secrets.MY_TOKEN }}
           files: |
