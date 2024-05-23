@@ -99,12 +99,6 @@ jobs:
           apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
           apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
 
-      - name: Upload APK all variant
-        uses: actions/upload-artifact@v4
-        with:
-          name: all
-          path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*all.apk
-
       - name: Upload APK variant arm64
         uses: actions/upload-artifact@v4
         with:
