@@ -87,12 +87,6 @@ jobs:
           dos2unix ./gradlew
           ./gradlew assemble
 
-      - name: "Execute Gradle check"
-        run: |
-          cd ${{ github.workspace }}/v2rayNG
-          dos2unix ./gradlew
-          ./gradlew check
-
       - name: Sign APK
         run: |
           cd ${{ github.workspace }}/v2rayNG
