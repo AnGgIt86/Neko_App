@@ -104,3 +104,9 @@ jobs:
         with:
           name: armeabi-v7a
           path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
+
+      - name: Upload APK variant all
+        uses: actions/upload-artifact@v4
+        with:
+          name: all
+          path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*all.apk
