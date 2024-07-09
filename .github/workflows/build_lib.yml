@@ -31,7 +31,7 @@ jobs:
     - name: Setup Golang
       uses: actions/setup-go@v5
       with:
-        go-version: '1.22.2'
+        go-version: '^1.22.2'
         cache: false
 
     - name: Install gomobile
@@ -54,9 +54,6 @@ jobs:
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
         cp *.aar ${{ github.workspace }}/v2rayNG/app/libs/
-        echo "======================================="
-        ls -all
-        echo "======================================="
 
     - name: Update library
       run: |
