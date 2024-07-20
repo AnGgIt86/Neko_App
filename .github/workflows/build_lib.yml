@@ -2,7 +2,7 @@ name: Dependencies
 
 on:
   workflow_dispatch:
-  inputs:
+    inputs:
       CORE:
         description: 'versi of the Xray-core'
         required: true
