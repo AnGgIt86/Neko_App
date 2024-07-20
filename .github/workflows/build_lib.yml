@@ -6,7 +6,7 @@ on:
       CORE:
         description: 'versi of the Xray-core'
         required: true
-        default: 'latest'
+        default: ''
 
 jobs:
   build:
