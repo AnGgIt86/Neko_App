@@ -3,7 +3,7 @@ name: Dependencies
 on:
   workflow_dispatch:
   inputs:
-      CORE_VERSION:
+      CORE:
         description: 'versi of the Xray-core'
         required: true
         default: 'latest'
@@ -50,7 +50,7 @@ jobs:
         cd ${{ github.workspace }}/v2rayNG/build
         git clone --depth=1 https://github.com/2dust/AndroidLibXrayLite
         cd AndroidLibXrayLite
-        go get github.com/xtls/xray-core@${{ github.event.inputs.CORE_VERSION }} || true
+        go get github.com/xtls/xray-core@${{ github.event.inputs.CORE }} || true
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
@@ -62,5 +62,5 @@ jobs:
         git config --global user.email jarbull87@gmail.com
         git config --global user.name Blawuken
         git add ${{ github.workspace }}/v2rayNG/app/libs/libv2ray.aar
-        git commit -m "Core: Bump ${{ github.event.inputs.CORE_VERSION }}"
+        git commit -m "Core: Bump ${{ github.event.inputs.CORE }}"
         git push
