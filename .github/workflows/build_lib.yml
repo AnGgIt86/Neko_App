@@ -40,27 +40,35 @@ jobs:
         go install golang.org/x/mobile/cmd/gomobile@latest
         echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
-    - name: Setup Android environment
-      uses: android-actions/setup-android@v3
+    - name: Setup Android SDK Tools
+      uses: android-actions/setup-android@v3.2.0
+      with:
+        cmdline-tools-version: 10406996
+
+    - name: Setup Android NDK
+      uses: nttld/setup-ndk@v1.4.2
+      with:
+        ndk-version: 'r26b'
+        link-to-sdk: true
 
     - name: Build dependencies
       run: |
         git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
-        mkdir ${{ github.workspace }}/v2rayNG/build
-        cd ${{ github.workspace }}/v2rayNG/build
-        git clone --depth=1 https://github.com/2dust/AndroidLibXrayLite
-        cd AndroidLibXrayLite
+        cd ${{ github.workspace }}/v2rayNG/AndroidLibXrayLite
+        mkdir -p assets data
+        bash gen_assets.sh download
+        mv -v data/*.dat assets/
         go get github.com/xtls/xray-core@${{ github.event.inputs.CORE }} || true
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
-        cp *.aar ${{ github.workspace }}/v2rayNG/app/libs/
+        mv *.aar ${{ github.workspace }}/v2rayNG/app/libs/
 
     - name: Update library
       run: |
         cd ${{ github.workspace }}/v2rayNG
         git config --global user.email jarbull87@gmail.com
         git config --global user.name Blawuken
-        git add ${{ github.workspace }}/v2rayNG/app/libs/libv2ray.aar
+        git add -f .
         git commit -m "Core: Bump ${{ github.event.inputs.CORE }}"
         git push
