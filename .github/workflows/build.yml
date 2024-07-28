@@ -37,7 +37,7 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
+          git clone https://AnGgIt86:$GH_TOKEN@github.com/AnGgIt86/v2rayNG
 
       - name: "Execute Gradle assemble"
         run: |

@@ -52,7 +52,7 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
+          git clone https://AnGgIt86:$GH_TOKEN@github.com/AnGgIt86/v2rayNG
 
       - name: Build
         run: |
@@ -72,4 +72,4 @@ jobs:
       - name: Release
         run: |
           cd ${{ github.workspace }}/v2rayNG/app/build/outputs/apk
-          ghr -t ${GH_TOKEN} -u Blawuken -r Neko_v2rayNG ${{ github.event.inputs.TAGS }} release
+          ghr -t ${GH_TOKEN} -u AnGgIt86 -r Neko_v2rayNG ${{ github.event.inputs.TAGS }} release

@@ -53,7 +53,7 @@ jobs:
 
     - name: Build dependencies
       run: |
-        git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
+        git clone https://AnGgIt86:$GH_TOKEN@github.com/AnGgIt86/v2rayNG
         cd ${{ github.workspace }}/v2rayNG/AndroidLibXrayLite
         mkdir -p assets data
         bash gen_assets.sh download
@@ -67,8 +67,8 @@ jobs:
     - name: Update library
       run: |
         cd ${{ github.workspace }}/v2rayNG
-        git config --global user.email jarbull87@gmail.com
-        git config --global user.name Blawuken
+        git config --global user.email jarbull86@gmail.com
+        git config --global user.name AnGgIt86
         git add -f .
         git commit -m "Core: Bump ${{ github.event.inputs.CORE }}"
         git push
