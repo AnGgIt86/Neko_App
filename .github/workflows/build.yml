@@ -19,6 +19,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GH_TOKEN: ${{ secrets.MY_TOKEN }}
+      NEKO_TOKEN: ${{ secrets.NEKO_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,7 +38,7 @@ jobs:
 
       - name: Clone
         run: |
-          git clone https://AnGgIt86:$GH_TOKEN@github.com/AnGgIt86/v2rayNG
+          git clone --depth=1 https://AnGgIt86:$NEKO_TOKEN@github.com/AnGgIt86/v2rayNG
 
       - name: "Execute Gradle assemble"
         run: |

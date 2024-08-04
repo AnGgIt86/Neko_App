@@ -18,6 +18,7 @@ jobs:
       id-token: write # to enable use of OIDC
     env:
       GH_TOKEN: ${{ secrets.MY_TOKEN }}
+      NEKO_TOKEN: ${{ secrets.NEKO_TOKEN }}
 
     steps:
     - name: Checkout code
@@ -53,7 +54,7 @@ jobs:
 
     - name: Build dependencies
       run: |
-        git clone https://AnGgIt86:$GH_TOKEN@github.com/AnGgIt86/v2rayNG
+        git clone https://AnGgIt86:$NEKO_TOKEN@github.com/AnGgIt86/v2rayNG
         cd ${{ github.workspace }}/v2rayNG/AndroidLibXrayLite
         mkdir -p assets data
         bash gen_assets.sh download
