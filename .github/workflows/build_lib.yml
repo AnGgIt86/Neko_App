@@ -63,7 +63,7 @@ jobs:
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
-        mv *.aar ${{ github.workspace }}/v2rayNG/library/libs/
+        mv *.aar ${{ github.workspace }}/v2rayNG/app/libs/
 
     - name: Update library
       run: |
