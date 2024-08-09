@@ -44,7 +44,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}/v2rayNG
           dos2unix ./gradlew
-          ./gradlew assemble
+          ./gradlew build
 
       - name: Sign APK
         run: |
